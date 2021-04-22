@@ -26,16 +26,14 @@ const users = [
   { name: 'Lux', active: false },
 ];
 
-const logger = (updatedUsers) => console.table(updatedUsers);
-
 const toggleUserState = (allUsers, userName) => {
-  return Promise((resolve) =>
+  return new Promise((resolve) => {
     resolve(
       allUsers.map((user) =>
         user.name === userName ? { ...user, active: !user.active } : user
       )
-    )
-  );
+    );
+  });
 };
 
 /* const toggleUserState = (allUsers, userName) => {
@@ -46,6 +44,8 @@ const toggleUserState = (allUsers, userName) => {
   );
 };
 */
+
+const logger = (updatedUsers) => console.table(updatedUsers);
 
 /*
  * Должно работать так
