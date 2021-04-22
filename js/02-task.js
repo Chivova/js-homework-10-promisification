@@ -1,6 +1,23 @@
-/* Задание 2
+/*
+Задание 2
+
 Перепиши функцию toggleUserState() так, чтобы она не использовала callback - функцию callback,
 а принимала всего два параметра allUsers и userName и возвращала промис.
+*/
+
+/* const toggleUserState = (allUsers, userName, callback) => {
+  const updatedUsers = allUsers.map(user =>
+    user.name === userName ? { ...user, active: !user.active } : user,
+  );
+
+  callback(updatedUsers);
+};
+*/
+
+/* Сейчас работает так
+toggleUserState(users, 'Mango', logger);
+toggleUserState(users, 'Lux', logger);
+*/
 
 const users = [
   { name: 'Mango', active: true },
@@ -9,21 +26,26 @@ const users = [
   { name: 'Lux', active: false },
 ];
 
-const toggleUserState = (allUsers, userName, callback) => {
-  const updatedUsers = allUsers.map(user =>
-    user.name === userName ? { ...user, active: !user.active } : user,
-  );
+const logger = (updatedUsers) => console.table(updatedUsers);
 
-  callback(updatedUsers);
+const toggleUserState = (allUsers, userName) => {
+  return Promise((resolve) =>
+    resolve(
+      allUsers.map((user) =>
+        user.name === userName ? { ...user, active: !user.active } : user
+      )
+    )
+  );
 };
 
-const logger = updatedUsers => console.table(updatedUsers);
-
-/*
- * Сейчас работает так
- */
-/* toggleUserState(users, 'Mango', logger);
-toggleUserState(users, 'Lux', logger);  */
+/* const toggleUserState = (allUsers, userName) => {
+  return Promise.resolve(
+    allUsers.map((user) =>
+      user.name === userName ? { ...user, active: !user.active } : user
+    )
+  );
+};
+*/
 
 /*
  * Должно работать так
